@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('level_nama', 100);
             $table->timestamps();
         });
+
     }
 
     /**

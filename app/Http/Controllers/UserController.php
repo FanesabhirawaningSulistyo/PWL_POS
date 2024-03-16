@@ -10,11 +10,16 @@ class UserController extends Controller
 {
     public function index()
     {
-        // Menyiapkan data untuk dimasukkan ke dalam tabel m_user
-       $data= [
-        'nama' => 'Pelanggan Pertama',
-       ];
-       UserModel::where('username','customer-1')->update($data);
+        // Data yang akan dimasukkan ke dalam tabel m_user
+        $data = [
+            'level_id' => 2,
+            'username' => 'manager_tiga',
+            'nama' => 'Manager 3',
+            'password' => Hash::make('12345') // Mengenkripsi password sebelum disimpan
+        ];
+
+        // Menyimpan data ke dalam tabel m_user menggunakan model UserModel
+        UserModel::create($data);
 
         // Mengambil semua data pengguna dari tabel m_user
         $users = UserModel::all();

@@ -8,7 +8,7 @@
             <tr>
                 <th>ID</th>
                 <th>Kode Level</th>
-                <th>Nama Level</th>
+                <th>Nama Leve l</th>
             </tr>
             @foreach($data as $d)
             <tr>

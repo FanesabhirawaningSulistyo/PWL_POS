@@ -8,8 +8,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class KategoriDataTable extends DataTable
@@ -19,10 +17,15 @@ class KategoriDataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+    public function dataTable($query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))
-            ->setRowId('id');
+         return (new EloquentDataTable($query))
+        ->setRowId('id')
+        ->addColumn('action', function ($row) {
+            $editBtn = '<a href="' . route('kategori.edit', $row->kategori_id) . '" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> </a>&nbsp';
+            $deleteBtn = '<a href="' . route('kategori.delete', $row->kategori_id) . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin ingin menghapus kategori ini?\')"><i class="fa fa-trash"></i></a>';
+            return $editBtn . ' ' . $deleteBtn;
+        });
     }
 
     /**
@@ -50,7 +53,7 @@ class KategoriDataTable extends DataTable
                 Button::make('pdf'),
                 Button::make('print'),
                 Button::make('reset'),
-                Button::make('reload')
+                Button::make('reload'),
             ]);
     }
 
@@ -65,6 +68,7 @@ class KategoriDataTable extends DataTable
             Column::make('kategori_nama'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::make('action'),
         ];
     }
 

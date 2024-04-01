@@ -17,8 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome1');
 });
+
 
 // Route::get('/level', [levelController::class, 'index']);
 // Route::get('/kategori', [KategoriController::class, 'index']);
@@ -36,6 +37,7 @@ Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
 Route::get('/kategori/delete/{id}', [KategoriController::class, 'delete'])->name('kategori.delete');
 Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit');
 Route::put('/kategori/update/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+Route::get('/level/tambah', [levelController::class, 'tambah']);
 
 
 

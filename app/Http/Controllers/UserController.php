@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,7 @@ class UserController extends Controller
         return view('user_tambah');
     }
 
-    public function tambah_simpan(Request $request)
+    public function tambah_simpan(StorePostRequest $request)
     {
         UserModel::create([
             'username' => $request->username,
@@ -28,6 +29,10 @@ class UserController extends Controller
             'level_id' => $request->level_id,
         ]);
 
+        $validated = $request->validate();
+            $validated = $request->safe()->only(['level_id','username', 'nama', 'password' ]);
+            $validated=$request->safe()->except(['level_id','username', 'nama', 'password' ]);
+        
         return redirect('/user');
     }
 

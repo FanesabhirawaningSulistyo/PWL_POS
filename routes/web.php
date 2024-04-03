@@ -4,6 +4,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\levelController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome1');
-});
+// Route::get('/', function () {
+//     return view('welcome1');
+// });
+Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 // Route::get('/level', [levelController::class, 'index']);

@@ -1,34 +1,3 @@
-{{-- @extends('layout.app')
-
-@section('subtitle', 'Kategori')
-@section('content_header_title', 'Home')
-@section('content_header_subtitle', 'Kategori')
-
-@section('content')
-
-   
-
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                Manage Kategori
-                <a href="{{ route('kategori.create') }}" class="btn btn-primary float-right">Add</a>
-            </div>
-            
-            <div class="card-body">
-                {{ $dataTable->table() }}
-            </div>
-        </div>
-    </div>
-@endsection
-
-@push('scripts')
-    {{ $dataTable->scripts() }}
-@endpush --}}
-
-
-{{-- Praktikum 7 - Tugas --}}
-
 @extends('layout.template')
 
 @section('content')
@@ -36,7 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('kategori/create') }}">Tambah</a>
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('level/create') }}">Tambah</a>
             </div>
         </div>
         <div class="card-body">
@@ -46,12 +15,12 @@
             @if (session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_kategori">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_level">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Kode Kategori</th>
-                        <th>Nama Kategori</th>
+                        <th>Level Kode</th>
+                        <th>Level Nama</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -65,14 +34,14 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataKategori = $('#table_kategori').DataTable({
+            var dataLevel = $('#table_level').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
-                    "url": "{{ url('kategori/list') }}",
+                    "url": "{{ url('level/list') }}",
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.kategori_id = $('#kategori_id').val();
+                        d.level_id = $('#level_id').val();
                     }
                 },
                 columns: [{
@@ -81,12 +50,12 @@
                     orderable: false,
                     searchable: false
                 }, {
-                    data: "kategori_kode",
+                    data: "level_kode",
                     className: "",
                     orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
                     searchable: true // searchable: true, jika ingin kolom ini bisa dicari
                 }, {
-                    data: "kategori_nama",
+                    data: "level_nama",
                     className: "",
                     orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
                     searchable: true // searchable: true, jika ingin kolom ini bisa dicari
@@ -99,8 +68,8 @@
             });
 
             // Praktikum 4 JS 7
-            $('#kategori_id').on('change', function() {
-                dataKategori.ajax.reload();
+            $('#level_id').on('change', function() {
+                dataLevel.ajax.reload();
             });
         });
     </script>

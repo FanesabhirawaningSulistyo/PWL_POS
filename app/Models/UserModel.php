@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use App\Models\LevelModel; // Add this import statement
 
-class UserModel extends Model
+class UserModel extends User
 {
     use HasFactory;
 

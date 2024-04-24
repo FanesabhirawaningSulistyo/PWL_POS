@@ -36,12 +36,12 @@
                 </div>
                 <div class="form-group">
                     <label for="penjualan_kode">Kode Penjualan</label>
-                    <input type="text" class="form-control" id="penjualan_kode" name="penjualan_kode" required>
+                    <input type="text" class="form-control" id="penjualan_kode" name="penjualan_kode" value="{{ $kodePenjualan }}" required readonly>
+
                 </div>
                 <div class="form-group">
                     <label for="penjualan_tanggal">Tanggal Penjualan</label>
-                    <input type="date" class="form-control" id="penjualan_tanggal" name="penjualan_tanggal"
-                            value="{{ old('penjualan_tanggal', date('Y-m-d\TH:i')) }}" required>
+                    <input type="date" class="form-control" id="penjualan_tanggal" name="penjualan_tanggal" value="{{ date('Y-m-d') }}" required readonly>
                 </div>
                 <div class="form-group">
                     <label for="barang_id">Barang</label>
@@ -55,6 +55,7 @@
                         </div>
                     @endforeach
                 </div>
+                
                 
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>

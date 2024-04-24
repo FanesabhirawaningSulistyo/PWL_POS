@@ -79,23 +79,27 @@ class StokController extends Controller
     public function edit(string $id)
     {
         $stok = StokModel::find($id);
-
+    
         $breadcrumb = (object) [
             'title' => 'Edit Stok',
             'list' => ['Home', 'Stok', 'Edit']
         ];
-
+    
         $page = (object) [
             'title' => 'Edit stok'
         ];
-
+    
         $activeMenu = 'stok';
-
+    
         $barang = BarangModel::all();
         $user = UserModel::all();
-
-        return view('stok.edit', compact('breadcrumb', 'page', 'stok', 'activeMenu', 'barang', 'user'));
+    
+        // Mengubah format waktu saat ini menjadi format yang sesuai untuk input date
+        $waktuSekarang = Carbon::now()->toDateString();
+    
+        return view('stok.edit', compact('breadcrumb', 'page', 'stok', 'activeMenu', 'barang', 'user', 'waktuSekarang'));
     }
+    
 
     public function update(Request $request, string $id)
     {

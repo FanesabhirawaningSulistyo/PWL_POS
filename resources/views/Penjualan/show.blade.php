@@ -47,15 +47,28 @@
                             <th>Barang</th>
                             <th>Harga</th>
                             <th>Jumlah</th>
+                            <th>Subtotal</th>
                         </tr>
                     </thead>
+                    @php
+                        $totalBelanja = 0;
+                    @endphp
                     @foreach ($penjualan->detail as $detail)
+                        @php
+                            $subtotal = $detail->harga * $detail->jumlah;
+                            $totalBelanja += $subtotal;
+                        @endphp
                         <tr>
                             <td>{{ $detail->barang->barang_nama }}</td>
                             <td>{{ $detail->harga }}</td>
                             <td>{{ $detail->jumlah }}</td>
+                            <td>{{ $subtotal }}</td>
                         </tr>
                     @endforeach
+                    <tr>
+                        <th colspan="3">Total Belanja</th>
+                        <td>{{ $totalBelanja }}</td>
+                    </tr>
                 </table>
             @endempty
             <a href="{{ url('penjualan') }}" class="btn btn-sm btn-default mt-2">Kembali</a>

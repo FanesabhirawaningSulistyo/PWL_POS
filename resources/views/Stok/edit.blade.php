@@ -51,12 +51,13 @@
             <div class="form-group row">
                 <label class="col-1 control-label col-form-label">Stok Tanggal</label>
                 <div class="col-11">
-                    <input type="date" class="form-control" id="stok_tanggal" name="stok_tanggal" value="{{ old('stok_tanggal', $stok->stok_tanggal) }}" required>
+                    <input type="date" class="form-control" id="stok_tanggal" name="stok_tanggal" value="{{ old('stok_tanggal', $waktuSekarang) }}" rrequired readonly>
                     @error('stok_tanggal')
                     <small class="form-text text-danger">{{ $message }}</small>
                     @enderror
                 </div>
             </div>
+            
             <div class="form-group row">
                 <label class="col-1 control-label col-form-label">Stok Jumlah</label>
                 <div class="col-11">

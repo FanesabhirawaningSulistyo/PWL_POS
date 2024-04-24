@@ -87,14 +87,21 @@ class PenjualanController extends Controller
     $barang = BarangModel::all(); // ambil data level untuk ditampilkan di form
     $activeMenu = 'penjualan'; //set menu yang sedang aktif
 
+    // Generate Kode Penjualan Otomatis dengan awalan "PJF" dan nomor urut
+    $nomorUrut = PenjualanModel::count() + 1; // Mendapatkan nomor urut berikutnya
+    $kodePenjualan = 'PJF' . str_pad($nomorUrut, 4, '0', STR_PAD_LEFT); // Contoh: PJF0001
+
     return view('penjualan.create', [
         'breadcrumb' => $breadcrumb,
         'page' => $page,
         'user' => $user,
         'barang' => $barang,
+        'kodePenjualan' => $kodePenjualan, // Kirim kode penjualan ke view
         'activeMenu' => $activeMenu
     ]);
 }
+
+    
 
 public function store(Request $request)
 {
@@ -127,6 +134,12 @@ public function store(Request $request)
         $barang = BarangModel::findOrFail($request->barang_id[$i]);
         $jumlahBarang = $request->jumlah[$i];
 
+        // Periksa apakah jumlah barang yang dibeli melebihi stok yang tersedia
+        $stokBarang = StokModel::where('barang_id', $barang->barang_id)->latest()->first();
+        if ($stokBarang->stok_jumlah < $jumlahBarang) {
+            return redirect('/penjualan')->with('error', 'Stok barang ' . $barang->barang_nama . ' kurang dari jumlah yang dibeli');
+        }
+
         // Hitung harga berdasarkan harga jual barang dan jumlah
         $hargaBarang = $barang->harga_jual * $jumlahBarang;
 
@@ -140,13 +153,13 @@ public function store(Request $request)
         ]);
 
         // Kurangi stok barang
-        $stokBarang = StokModel::where('barang_id', $barang->barang_id)->latest()->first();
         $newStok = $stokBarang->stok_jumlah - $jumlahBarang; // Kurangi stok sesuai dengan jumlah barang yang dibeli
         $stokBarang->update(['stok_jumlah' => $newStok]);
     }
 
     return redirect('/penjualan')->with('success', 'Data transaksi berhasil disimpan');
 }
+
 
 
 

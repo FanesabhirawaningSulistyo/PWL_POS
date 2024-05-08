@@ -17,7 +17,7 @@
         @csrf
         {{-- Nama field --}}
         <div class="input-group mb-3">
-            <input type="text" name="nama" class="form-control" @error('nama') is-invalid @enderror"
+            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
                 value="{{ old('name') }}" placeholder="Nama" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -32,7 +32,7 @@
         </div>
         {{-- Username field --}}
         <div class="input-group mb-3">
-            <input type="text" name="username" class="form-control" @error('username') is-invalid @enderror"
+            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
                 value="{{ old('username') }}" placeholder="Username" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -47,7 +47,7 @@
         </div>
         {{-- Password field --}}
         <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control" @error('password') is-invalid @enderror"
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
                 placeholder="{{ __('adminlte::adminlte.password') }}">
             <div class="input-group-append">
                 <div class="input-group-text">

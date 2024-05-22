@@ -43,4 +43,5 @@ class BarangModel extends Model
             get: fn ($image) => url('/storage/posts/' . $image),
         );
     }
+    
 }

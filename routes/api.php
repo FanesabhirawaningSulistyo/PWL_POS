@@ -53,6 +53,7 @@ Route::put('/kategoris/{kategori}', [KategoriController::class, 'update']);
 Route::delete('/kategoris/{kategori}', [KategoriController::class, 'destroy']);
 
 use App\Http\Controllers\Api\BarangController;
+use App\Http\Controllers\Api\TransaksiController;
 
 Route::get('/barangs', [BarangController::class, 'index']);
 Route::post('/barangs', [BarangController::class, 'store']);
@@ -61,3 +62,4 @@ Route::put('/barangs/{barang}', [BarangController::class, 'update']);
 Route::delete('/barangs/{barang}', [BarangController::class, 'destroy']);
 
 Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');
+Route::get('transaksi/{id}', [TransaksiController::class, 'show']);

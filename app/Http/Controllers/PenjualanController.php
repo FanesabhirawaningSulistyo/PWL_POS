@@ -88,7 +88,7 @@ class PenjualanController extends Controller
     $activeMenu = 'penjualan'; //set menu yang sedang aktif
 
     // Generate Kode Penjualan Otomatis dengan awalan "PJF" dan nomor urut
-    $nomorUrut = PenjualanModel::count() + 1; // Mendapatkan nomor urut berikutnya
+    $nomorUrut = PenjualanModel::count() + 3; // Mendapatkan nomor urut berikutnya
     $kodePenjualan = 'PJF' . str_pad($nomorUrut, 4, '0', STR_PAD_LEFT); // Contoh: PJF0001
 
     return view('penjualan.create', [
@@ -102,7 +102,6 @@ class PenjualanController extends Controller
 }
 
     
-
 public function store(Request $request)
 {
     $request->validate([
@@ -134,8 +133,13 @@ public function store(Request $request)
         $barang = BarangModel::findOrFail($request->barang_id[$i]);
         $jumlahBarang = $request->jumlah[$i];
 
-        // Periksa apakah jumlah barang yang dibeli melebihi stok yang tersedia
+        // Periksa apakah stok barang ada
         $stokBarang = StokModel::where('barang_id', $barang->barang_id)->latest()->first();
+        if (!$stokBarang) {
+            return redirect('/penjualan')->with('error', 'Stok barang ' . $barang->barang_nama . ' tidak ditemukan');
+        }
+
+        // Periksa apakah jumlah barang yang dibeli melebihi stok yang tersedia
         if ($stokBarang->stok_jumlah < $jumlahBarang) {
             return redirect('/penjualan')->with('error', 'Stok barang ' . $barang->barang_nama . ' kurang dari jumlah yang dibeli');
         }
@@ -159,6 +163,7 @@ public function store(Request $request)
 
     return redirect('/penjualan')->with('success', 'Data transaksi berhasil disimpan');
 }
+
 
 
 

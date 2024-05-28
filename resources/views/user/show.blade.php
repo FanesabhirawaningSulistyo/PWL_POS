@@ -15,6 +15,14 @@
         @else
         <table class="table table-bordered table-striped table-hover table-sm">
             <tr>
+                <th>Photo Profile</th>
+                <td>{{ basename($user->image) }}</td>
+            </tr>
+            <tr>
+                <th>Photo Profile</th>
+                <td><img src="{{ $user->image }}"></td>
+            </tr>
+            <tr>
                 <th>ID</th>
                 <td>{{ $user->user_id }}</td>
             </tr>
@@ -43,6 +51,11 @@
 
 @push('css')
 <!-- Any additional CSS styles if needed -->
+<style>
+    img {
+        width: 15vw;
+    }
+</style>
 @endpush
 
 @push('js')

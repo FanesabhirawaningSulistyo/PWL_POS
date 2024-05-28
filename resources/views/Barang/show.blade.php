@@ -39,11 +39,8 @@
                 <td>{{ $barang->harga_jual }}</td>
             </tr>
             <tr>
-                <th>Image</th>
-                <td>
-                    <img src="{{ asset($barang->image) }}" alt="{{ $barang->barang_nama }}" class="img-thumbnail" width="100">
-                    
-                </td>
+                <th>Photo Barang</th>
+                <td><img src="{{ $barang->image }}"></td>
             </tr>
             
         </table>
@@ -54,6 +51,11 @@
 @endsection
 
 @push('css')
+<style>
+    img {
+        width: 15vw;
+    }
+</style>
 @endpush
 
 @push('js')

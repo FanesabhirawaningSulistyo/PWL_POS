@@ -125,14 +125,19 @@ public function store(Request $request)
         'username' => 'required|string|min:3|unique:m_user,username',
         'nama' => 'required|string|max:100',
         'password' => 'required|string|min:5',
-        'level_id' => 'required|integer'
+        'level_id' => 'required|integer',
+        'image'     => 'required|file|image|max:1000',
     ]);
+
+    $namaFile = 'IMG' . time() . '-' . $request->image->getClientOriginalName();
+    $path = $request->image->storeAs('public/user', $namaFile);
 
     UserModel::create([
         'username' => $request->username,
         'nama' => $request->nama,
         'password' => bcrypt($request->password),
         'level_id' => $request->level_id,
+        'image'       => $namaFile
     ]);
 
     return redirect('/user')->with('success', 'Data user berhasil disimpan');
@@ -176,23 +181,30 @@ public function edit(string $id)
 }
 
 public function update(Request $request, string $id)
-{
-    $request->validate([
-        'username' => 'required|string|min:3|unique:m_user,username,' . $id . ',user_id',
-        'nama' => 'required|string|max:100',
-        'password' => 'nullable|min:5',
-        'level_id' => 'required|integer'
-    ]);
+    {
+        $request->validate([
+            'username'   => 'required|string|min:3|unique:m_user,username,' . $id . ',user_id',
+            'nama'       => 'required|string|max:100',
+            'password'   => 'nullable|min:5',
+            'level_id'   => 'required|integer',
+            'image'      => 'nullable|file|image|max:1000',
+        ]);
 
-    $user = UserModel::find($id);
-    $user->username = $request->username;
-    $user->nama = $request->nama;
-    $user->password = $request->password ? bcrypt($request->password) : $user->password;
-    $user->level_id = $request->level_id;
-    $user->save();
+        if ($request->image) {
+            $namaFile = 'IMG' . time() . '-' . $request->image->getClientOriginalName();
+            $path = $request->image->storeAs('public/user', $namaFile);
+        }
 
-    return redirect('/user')->with("success", "Data user berhasil diubah");
-}
+        UserModel::find($id)->update([
+            'username'    => $request->username,
+            'nama'        => $request->nama,
+            'password'    => $request->password ? bcrypt($request->password) : UserModel::find($id)->password,
+            'level_id'    => $request->level_id,
+            'image'       => $request->image ? $namaFile : basename(UserModel::find($id)->image)
+        ]);
+
+        return redirect('/user')->with('success', 'Data user berhasil diubah');
+    }
 
 public function destroy(string $id)
 {

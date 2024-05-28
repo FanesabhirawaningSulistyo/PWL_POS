@@ -78,18 +78,23 @@ class BarangController extends Controller
         'harga_beli' => 'required|integer',
         'harga_jual' => 'required|integer|gt:harga_beli', // Memastikan harga jual lebih besar dari harga beli
         'kategori_id' => 'required|integer',
+        'image'        => 'required|file|image|max:1000',
         'stok_jumlah' => 'required|integer',
         'user_id' => 'required|integer'
     ], [
         'harga_jual.gt' => 'Harga jual harus lebih besar dari harga beli.'
     ]);
 
+    $namaFile = 'IMG' . time() . '-' . $request->image->getClientOriginalName();
+    $path = $request->image->storeAs('public/barang', $namaFile);
+
     BarangModel::create([
         'barang_kode' => $request->barang_kode,
         'barang_nama' => $request->barang_nama,
         'harga_beli' => $request->harga_beli,
         'harga_jual' => $request->harga_jual,
-        'kategori_id' => $request->kategori_id
+        'kategori_id' => $request->kategori_id,
+        'image'          => $namaFile
     ]);
 
     StokModel::create([
@@ -147,17 +152,25 @@ class BarangController extends Controller
             'barang_nama' => 'required|string|max:100',
             'harga_beli' => 'required|integer',
             'harga_jual' => 'required|integer|gt:harga_beli',
-            'kategori_id' => 'required|integer'
+            'kategori_id' => 'required|integer',
+            'image'        => 'nullable|file|image|max:1000',
         ]
         , [
             'harga_jual.gt' => 'Harga jual harus lebih besar dari harga beli.'
         ]);
+
+        if ($request->image) {
+            $namaFile = 'IMG' . time() . '-' . $request->image->getClientOriginalName();
+            $path = $request->image->storeAs('public/barang', $namaFile);
+        }
+
         BarangModel::find($id)->update([
             'barang_kode' => $request->barang_kode,
             'barang_nama' => $request->barang_nama,
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
-            'kategori_id' => $request->kategori_id
+            'kategori_id' => $request->kategori_id,
+            'image'       => $request->image ? $namaFile : basename(BarangModel::find($id)->image)
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil diubah');

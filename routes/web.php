@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\FileUploadRenameController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ManagerController;
@@ -35,6 +36,10 @@ Route::get('/', function () {
 
 Route::get('/file-upload', [FileUploadController::class, 'fileUpload']);
 Route::post('/file-upload', [FileUploadController::class, 'prosesFileUpload']);
+
+// TUGAS JS 12 (NO 1) -- FileUpload
+Route::get('/file-upload-rename', [FileUploadRenameController::class, 'fileUpload']);
+Route::post('/file-upload-rename', [FileUploadRenameController::class, 'prosesFileUpload']);
 
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::get('register', [AuthController::class, 'register'])->name('register');
